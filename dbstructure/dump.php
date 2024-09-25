@@ -1,5 +1,12 @@
 <?php
+include('../inc/app_settings.php');
+require_once('../inc/helpers.php');
+$helpers = new Helpers();
 
+if(!$helpers->checkSession()) {
+    $helpers->redirectLogin();
+    return;
+}
 // Database configuration
 $host = "localhost";
 $username = "root";
