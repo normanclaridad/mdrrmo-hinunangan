@@ -231,6 +231,7 @@ include_once '../../../templates/sidebar.php';
 
                     if(json['code'] == 0) {
                         msg.html('<div class="alert alert-success">'+ json['message'] +'</div>');
+                        $('#tbl-data').DataTable().ajax.reload();
                         $('#modal-add').modal('hide');
                         
                     } else {
@@ -247,7 +248,7 @@ include_once '../../../templates/sidebar.php';
         $('#frm-user')[0].reset();
         // Reset the form to remove the validation error
         $('#frm-user').parsley().reset();
-        
+
         $('.modal-title').html('Edit User');
         $('#action_type').val('update');
         $('#id').val($(this).data('id'));
@@ -259,7 +260,9 @@ include_once '../../../templates/sidebar.php';
         $('#password-area').addClass('password-area');
 
         $('#password').removeAttr('data-parsley-required');
-            $('#confirm_password').removeAttr('data-parsley-required');
+        $('#password').removeAttr('required');
+        $('#confirm_password').removeAttr('data-parsley-required');
+        $('#confirm_password').removeAttr('required');
 
         $('#status').removeAttr('checked');
         // $('#status_no').attr('checked', false);

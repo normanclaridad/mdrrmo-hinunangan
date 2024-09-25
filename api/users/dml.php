@@ -18,7 +18,7 @@ $userName = isset($_POST['username']) ? $_POST['username']: '';
 $password = isset($_POST['password']) ? $_POST['password']: '';
 $confirmPassword = isset($_POST['confirm_password']) ? $_POST['confirm_password']: '';
 $userRoleId = isset($_POST['user_role_id']) ? $_POST['user_role_id']: '';
-$status = isset($_POST['status']) ? $_POST['status']: '';
+$status = isset($_POST['status']) ? 'Y': 'N';
 $userId = $_SESSION['SESS_ID'];
 $dateTime = date('Y-m-d H:i:s');
 
