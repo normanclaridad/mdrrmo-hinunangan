@@ -18,7 +18,7 @@ $url        = isset($_POST['url']) ? $_POST['url']: '';
 $icon       = isset($_POST['icon']) ? $_POST['icon']: '';
 $sort       = isset($_POST['sort']) ? $_POST['sort']: '';
 $activekeyword  = isset($_POST['sort']) ? $_POST['active_keyword']: '';
-$status         = isset($_POST['status']) ? $_POST['status']: '';
+$status         = isset($_POST['status']) ? 'Y' : 'N';
 $userId         = $_SESSION['SESS_ID'];
 
 $dateTime   = date('Y-m-d H:i:s');

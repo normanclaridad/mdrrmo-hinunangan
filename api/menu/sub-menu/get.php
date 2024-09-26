@@ -61,16 +61,14 @@ $data = [];
 foreach($results AS $row) {
     $encryptedId = $helpers->encryptDecrypt($row['id']);
     $farmersUrl = $protocol . $_SERVER['HTTP_HOST'] . '/views/user-roles/farmers.php?id=' . $encryptedId;
-    $action =  '<a class="btn btn-circle btn-sm btn-primary btn-edit" data-id="'. $row['id'] .'" data-name="'. $row['name'] .'" data-url="'. $row['url']  .'" data-icon="'. $row['icon'] .'" data-sort="'. $row['sort'] .'" data-status="'. $row['is_active'] .'" data-active-keyword="'. $row['active_keyword'] .'"><i class="bi bi-pencil-square"></i></a>';
-    $action .= '&nbsp; <a class="btn btn-circle btn-sm btn-danger btn-delete" data-id="'. $row['id'] .'" data-name="'. $row['name'] .'"><i class="bi bi-x"></i></a>';
+    $action =  '<a class="btn-edit" data-id="'. $row['id'] .'" data-name="'. $row['name'] .'" data-url="'. $row['url']  .'" data-icon="'. $row['icon'] .'" data-sort="'. $row['sort'] .'" data-status="'. $row['is_active'] .'" data-active-keyword="'. $row['active_keyword'] .'"><i class="fa fa-pencil-square"></i></a>';
+    $action .= '&nbsp; <a class="btn-delete" data-id="'. $row['id'] .'" data-name="'. $row['name'] .'"><i class="fa fa-times-circle"></i></a>';
     
-    $status = '';
+    $status = '<i class="fa fa-times"></i>';
     if($row['is_active'] == 'Y') {
-        $status = '<i class="bi bi-check"></i>';
+        $status = '<i class="fa fa-check"></i>';
     }
-    if($row['is_active'] == 'N') {
-        $status = '<i class="bi bi-x"></i>';
-    }
+    
     $data[] = [
         $row['name'],
         $row['url'],

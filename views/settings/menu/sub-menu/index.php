@@ -84,7 +84,7 @@ if(!empty($resMenu)) {
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">
-                        <?php echo $menuName ?>
+                        Menu - <?php echo $menuName ?>
                         <span class="float-end">
                             <button class="btn btn-outline-secondary btn-rounded btn-icon btn-sm" id="btn-add">
                                 <i class="mdi mdi-plus-outline text-info"></i>
@@ -93,10 +93,12 @@ if(!empty($resMenu)) {
                     </h4>
                     <table class="table" id="tbl-data">
                         <thead>
-                            <tr> 
+                            <tr>
                                 <th>Name</th>
                                 <th>Url</th>
-                                <th>Is Active</th>
+                                <th>Icon</th>
+                                <th>Sort</th>
+                                <th>Status</th>
                                 <th>Created </th>
                                 <th>Action</th>
                             </tr>
@@ -177,7 +179,7 @@ if(!empty($resMenu)) {
                     }
                 },
                 "columnDefs": [ {
-                    "targets": [4],
+                    "targets": [6],
                     "orderable": false
                 } ],
                 "order": []
@@ -189,7 +191,7 @@ if(!empty($resMenu)) {
                 }
                 var msg = $('.error-message');
                 $.ajax({
-                    url : '<?php echo BASE_URL ?>/api/menu/dml.php',
+                    url : '<?php echo BASE_URL ?>/api/menu/sub-menu/dml.php',
                     type : 'post',
                     data : $('#frm-menu').serialize(),
                     success : function(data) {
@@ -262,7 +264,7 @@ if(!empty($resMenu)) {
                 if(confirm('Are you sure you want delete name: ' + name + '?'))
                 {
                     $.ajax({
-                        url : '<?php echo BASE_URL ?>/api/menu/dml.php',
+                        url : '<?php echo BASE_URL ?>/api/menu/sub-menu/dml.php',
                         type : 'post',
                         data : { action_type : 'delete', 'id' : id },
                         success : function(data) {
