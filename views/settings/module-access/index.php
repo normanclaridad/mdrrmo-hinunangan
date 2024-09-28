@@ -4,7 +4,7 @@ require_once('../../../inc/helpers.php');
 require ('../../../models/User_roles.php');
 
 $helpers = new Helpers();
-define('PAGE_TITLE', 'Module');
+define('PAGE_TITLE', 'Module Access');
 
 if(!$helpers->checkSession()) {
     $helpers->redirectLogin();

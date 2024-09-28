@@ -67,10 +67,11 @@ $resUsers = $users->getJoinWhere($whereCondition, $sortBy, $start, $length);
 $data = [];
 foreach($resUsers AS $row) {
     $encryptedId = $helpers->encryptDecrypt($row['id']);
-    $action = '<a class="btn btn-sm btn-edit" data-id="'. $row['id'] .'" data-first-name="'. $row['first_name']  .'" data-last-name="'. $row['last_name']  .'" data-username="'. $row['username']  .'" data-status="'. $row['status']  .'" data-user-role-id="'. $row['user_role_id']  .'"><i class="fa fa-edit"></i></a>';
-    $action .= '&nbsp; <a class="btn btn-sm btn-delete" data-id="'. $row['id'] .'" data-first-name="'. $row['first_name']  .'" data-last-name="'. $row['last_name']  .'"><i class="fa fa-trash"></i></a>';
-    $action .= '&nbsp; <a class="btn btn-sm btn-reset" data-id="'. $row['id'] .'" data-first-name="'. $row['first_name']  .'" data-last-name="'. $row['last_name']  .'"><i class="fa fa-key"></i></a>';
-    $status = '<i class = "fa fa-times"></i>';
+    $action = '<a class="btn-edit" data-id="'. $row['id'] .'" data-first-name="'. $row['first_name']  .'" data-last-name="'. $row['last_name']  .'" data-username="'. $row['username']  .'" data-status="'. $row['status']  .'" data-user-role-id="'. $row['user_role_id']  .'"><i class="fa fa-edit"></i></a>';
+    $action .= '&nbsp; <a class="btn-delete" data-id="'. $row['id'] .'" data-first-name="'. $row['first_name']  .'" data-last-name="'. $row['last_name']  .'"><i class="fa fa-trash"></i></a>';
+    $action .= '&nbsp; <a class="btn-reset" data-id="'. $row['id'] .'" data-first-name="'. $row['first_name']  .'" data-last-name="'. $row['last_name']  .'"><i class="fa fa-key"></i></a>';
+    $action .= '&nbsp; <a class="btn-access" data-id="'. $row['id'] .'" data-first-name="'. $row['first_name']  .'" data-last-name="'. $row['last_name']  .'"><i class="fa fa-lock"></i></a>';
+    $status = '<i class="fa fa-times"></i>';
     if ($row['status'] == 'Y'){
         $status = '<i class = "fa fa-check"></i>';
     }

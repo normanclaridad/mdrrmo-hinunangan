@@ -37,6 +37,7 @@ $columns = [
 
 $whereCondition = $sqlTot = $sqlRec = '';
 
+$whereCondition = " AND status != 'D' ";
 if( !empty($params['search']['value']) ) {
     $whereCondition .= " AND ";
     $whereCondition .= " ( name LIKE '%". $params['search']['value'] ."%')";

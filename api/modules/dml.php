@@ -39,9 +39,9 @@ if($actionType == 'add') {
         'updated_at' => $dateTime
     ];
 }
-$where = '';
-if(in_array($actionType, ['add', 'update'])) {
-        
+
+if(in_array($actionType, ['add', 'update'])) {    
+    $where = "AND name = '". $name ."'";
     if($actionType == 'update') {
         $where .= " AND id != $id";
     }
