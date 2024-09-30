@@ -17,6 +17,7 @@
     <link href="<?php echo BASE_URL ?>/assets/vendors/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="<?php echo BASE_URL ?>/assets/css/parsley.css">
+    <link rel="stylesheet" href="<?php echo BASE_URL ?>/assets/css/select2.css">
 
     <!-- End plugin css for this page -->
     <!-- inject:css -->

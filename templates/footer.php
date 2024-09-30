@@ -39,3 +39,4 @@
 
     
     <script src="<?php echo BASE_URL ?>/assets/js/parsley.js"></script>
+    <script src="<?php echo BASE_URL ?>/assets/js/select2.full.js"></script>
