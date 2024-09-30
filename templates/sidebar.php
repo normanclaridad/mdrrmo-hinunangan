@@ -28,7 +28,7 @@ foreach($resMenu AS $row) {
             <ul class="nav">                
             <?php foreach($menu_list AS $row): 
                     $checkmenu = $helpers->checkactivemenu($uri, $row['active_keyword']);
-                    $active = ($checkmenu) ? '' : 'collapsed';
+                    $active = ($checkmenu) ? 'active' : '';
                     $areaexpanded = ($checkmenu) ? 'aria-expanded="true"' : '';
                     $navCon = ($checkmenu) ? 'aria-expanded="true"' : '';
                     $navcontentshow = ($checkmenu) ? 'show' : '';
@@ -43,7 +43,7 @@ foreach($resMenu AS $row) {
                     }
                 ?>
                 <?php if(empty($row['sub_menu'])): ?>
-                <li class="nav-item <?php echo $active ?>">
+                <li class="nav-item <?php echo $active ?>" data-active-keyword="<?php echo $row['active_keyword'] . '|' . $uri ?>">
                     <a class="nav-link" href="<?php echo $baseUrl ?>">
                         <span class="menu-title"><?php echo $row['name'] ?></span>
                         <i class="<?php echo $row['icon'] ?>"></i>

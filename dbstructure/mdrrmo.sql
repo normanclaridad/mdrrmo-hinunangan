@@ -35,7 +35,7 @@ CREATE TABLE `menu` (
   `updated_by` int DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,8 +44,73 @@ CREATE TABLE `menu` (
 
 LOCK TABLES `menu` WRITE;
 /*!40000 ALTER TABLE `menu` DISABLE KEYS */;
-INSERT INTO `menu` VALUES (1,'Home','/','mdi mdi-home menu-icon',1,'home','Y',1,'2023-12-01 12:15:47',1,'2024-09-23 01:29:47'),(2,'Settings','#','mdi mdi-cog menu-icon',10,'settings','Y',1,'2023-12-01 12:15:47',1,'2024-09-23 02:42:30');
+INSERT INTO `menu` VALUES (1,'Home','/','mdi mdi-home menu-icon',1,'home','Y',1,'2023-12-01 12:15:47',1,'2024-09-23 01:29:47'),(2,'Settings','#','mdi mdi-cog menu-icon',10,'settings','Y',1,'2023-12-01 12:15:47',1,'2024-09-23 02:42:30'),(4,'Patient Healthcare','/views/patient-healthcare/index.php','mdi mdi-stethoscope menu-icon',3,'patient-healthcare','Y',1,'2024-09-25 16:14:16',1,'2024-09-29 23:28:18');
 /*!40000 ALTER TABLE `menu` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `module_access`
+--
+
+DROP TABLE IF EXISTS `module_access`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `module_access` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `module_id` int NOT NULL,
+  `user_id` int DEFAULT NULL,
+  `insert` tinyint NOT NULL DEFAULT '0',
+  `view` tinyint NOT NULL DEFAULT '0',
+  `delete` tinyint NOT NULL DEFAULT '0',
+  `update` tinyint NOT NULL DEFAULT '0',
+  `export` tinyint NOT NULL DEFAULT '0',
+  `created_by` int DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `module_access`
+--
+
+LOCK TABLES `module_access` WRITE;
+/*!40000 ALTER TABLE `module_access` DISABLE KEYS */;
+INSERT INTO `module_access` VALUES (7,1,2,1,0,0,0,0,1,'2024-09-28 16:48:37',1,'2024-09-28 08:48:37'),(8,3,2,0,0,0,1,0,1,'2024-09-28 16:48:37',1,'2024-09-28 08:48:37'),(9,4,2,0,0,1,0,0,1,'2024-09-28 16:48:37',1,'2024-09-28 08:48:37');
+/*!40000 ALTER TABLE `module_access` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `modules`
+--
+
+DROP TABLE IF EXISTS `modules`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `modules` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) DEFAULT NULL,
+  `code` varchar(10) NOT NULL,
+  `status` char(1) NOT NULL DEFAULT 'Y' COMMENT 'Y = Yes\\nN = No',
+  `created_by` int DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `code_UNIQUE` (`code`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `modules`
+--
+
+LOCK TABLES `modules` WRITE;
+/*!40000 ALTER TABLE `modules` DISABLE KEYS */;
+INSERT INTO `modules` VALUES (1,'Users','USRS','Y',1,'2024-09-26 16:42:43',1,'2024-09-26 08:48:08'),(2,'test','32342','D',1,'2024-09-26 20:33:32',1,'2024-09-26 12:36:04'),(3,'Menu','MENU','Y',1,'2024-09-26 20:39:55',1,'2024-09-26 12:39:55'),(4,'Settings','SETG','Y',1,'2024-09-26 20:40:23',1,'2024-09-26 12:40:38');
+/*!40000 ALTER TABLE `modules` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -69,7 +134,7 @@ CREATE TABLE `sub_menu` (
   `updated_by` int DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -78,7 +143,7 @@ CREATE TABLE `sub_menu` (
 
 LOCK TABLES `sub_menu` WRITE;
 /*!40000 ALTER TABLE `sub_menu` DISABLE KEYS */;
-INSERT INTO `sub_menu` VALUES (1,2,'Users','/views/settings/users/index.php','nav-link',4,'users','Y',1,'2023-12-01 12:25:21',1,'2024-09-23 01:32:15'),(2,2,'User Roles','/views/settings/user-roles/index.php','nav-link',3,'user-roles','Y',1,'2023-12-01 12:25:21',1,'2024-09-23 01:32:15');
+INSERT INTO `sub_menu` VALUES (1,2,'Users','views/settings/users/index.php','nav-link',4,'users','Y',1,'2023-12-01 12:25:21',1,'2024-09-25 08:39:35'),(2,2,'User Roles','views/settings/user-roles/index.php','nav-link',3,'user-roles','Y',1,'2023-12-01 12:25:21',1,'2024-09-25 08:39:35'),(4,2,'Menu','views/settings/menu/index.php','nav-link',2,'menu','Y',1,'2023-12-01 12:25:21',1,'2024-09-25 13:34:38'),(6,2,'Modules','views/settings/modules/index.php','nav-link',2,'modules','Y',1,'2024-09-26 07:55:19',1,'2024-09-26 08:14:23');
 /*!40000 ALTER TABLE `sub_menu` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -154,4 +219,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-25 11:20:26
+-- Dump completed on 2024-09-30  8:31:07

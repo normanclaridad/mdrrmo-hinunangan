@@ -60,7 +60,9 @@ class Helpers {
      */
 
      public function checkactivemenu($uri, $activekeyword) : bool {
-        if(strpos($uri, $activekeyword) !== false) {
+
+        $spl = str_replace('/views/','',$uri);
+        if(strpos($spl, $activekeyword) === true) {
             return true;
         }
 
