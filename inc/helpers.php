@@ -93,4 +93,11 @@ class Helpers {
         
         return $device;
     }
+
+    public function getCurrentUser() {
+        $name = $_SESSION['SESS_FIRST_NAME'];
+        $name .= ' '. $_SESSION['SESS_LAST_NAME'];
+
+        return $name;
+    }
 }
