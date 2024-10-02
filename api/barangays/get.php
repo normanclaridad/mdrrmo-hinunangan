@@ -22,7 +22,8 @@ if(strlen($search) < 4) {
 }
 
 // $whereCondition = "(b.brgyDesc LIKE '%". $search ."%' OR cm.cityMunDesc LIKE '%". $search ."%' OR p.provDesc LIKE '%". $search ."%')";
-$whereCondition = "(b.brgyDesc LIKE '". $search ."%')";
+// $whereCondition = "(b.brgyDesc LIKE '". $search ."%')";
+$whereCondition = "CONCAT(b.brgyDesc, ' ', cm.citymunDesc, ' ', p.provDesc) LIKE '$search%'";
 $resResults = $barangays->getJoinWhere($whereCondition);
 
 foreach($resResults AS $row) {
