@@ -1,0 +1,157 @@
+body {
+    font-family: Arial, sans-serif;
+}
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+select, input[type="date"], input[type="text"], input[type="file"] {
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+form {
+    width: 50%;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+select, input[type="date"], input[type="text"], input[type="file"] {
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+select {
+    height: 40px;
+}
+
+input[type="file"] {
+    padding: 10px 0;
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button[type="submit"]:hover {
+    background-color: #3e8e41;
+}
+
+#attended-container, #conducted-container, #lgu-container, #blgu-container {
+    margin-bottom: 20px;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+select {
+    width: 100%;
+    height: 40px;
+    margin-bottom: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#mapContainer {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 4px;
+}
+
+select option {
+    padding: 10px;
+}
+
+select:focus {
+    border-color: #aaa;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.agencies {
+    position: relative;
+    display: inline-block;
+  }
+
+  .agency-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+  .agency-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .agency-content a:hover {background-color: #f1f1f1}
+
+  .agencies:hover .agency-content {
+    display: block;
+  }
+
+  .agencies:hover .agency-btn {
+    background-color: #3e8e41;
+  }
+
+  .agency-submenu {
+    position: relative;
+  }
+
+  .agency-submenu .agency-submenu-content {
+    display: none;
+    position: absolute;
+    left: 100%;
+    top: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+
+  .agency-submenu .agency-submenu-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+
+  .agency-submenu .agency-submenu-content a:hover {background-color: #f1f1f1}
+
+  .agency-submenu:hover .agency-submenu-content {
+    display: block;
+  }
