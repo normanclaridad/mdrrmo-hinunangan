@@ -17,7 +17,6 @@
     <link href="<?php echo BASE_URL ?>/assets/vendors/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
     <link rel="stylesheet" href="<?php echo BASE_URL ?>/assets/css/parsley.css">
-    <link rel="stylesheet" href="<?php echo BASE_URL ?>/assets/css/select2.css">
 
     <!-- End plugin css for this page -->
     <!-- inject:css -->
@@ -46,7 +45,7 @@
                 <div class="input-group-prepend bg-transparent">
                   <i class="input-group-text border-0 mdi mdi-magnify"></i>
                 </div>
-                <input type="text" class="form-control bg-transparent border-0" placeholder="Search projects">
+                <input type="text" class="form-control bg-transparent border-0" placeholder="Search ">
               </div>
             </form>
           </div>
@@ -151,7 +150,7 @@
                   <span class="availability-status online"></span>
                 </div>
                 <div class="nav-profile-text">
-                  <p class="mb-1 text-black"><?php echo $helpers->getCurrentUser(); ?></p>
+                  <p class="mb-1 text-black">David Greymaax</p>
                 </div>
               </a>
               <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
