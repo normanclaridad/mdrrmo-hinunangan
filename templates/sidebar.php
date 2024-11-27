@@ -28,7 +28,7 @@ foreach($resMenu AS $row) {
             <ul class="nav">                
             <?php foreach($menu_list AS $row): 
                     $checkmenu = $helpers->checkactivemenu($uri, $row['active_keyword']);
-                    $active = ($checkmenu) ? 'active' : '';
+                    $active = ($checkmenu == 1) ? 'active' : '';
                     $areaexpanded = ($checkmenu) ? 'aria-expanded="true"' : '';
                     $navCon = ($checkmenu) ? 'aria-expanded="true"' : '';
                     $navcontentshow = ($checkmenu) ? 'show' : '';
@@ -43,7 +43,7 @@ foreach($resMenu AS $row) {
                     }
                 ?>
                 <?php if(empty($row['sub_menu'])): ?>
-                <li class="nav-item <?php echo $active ?>" data-active-keyword="<?php echo $row['active_keyword'] . '|' . $uri ?>">
+                <li class="nav-item <?php echo $active ?>" data-status = "<?php echo $checkmenu ?>" data-active-keyword="<?php echo $row['active_keyword'] . '|' . $uri ?>">
                     <a class="nav-link" href="<?php echo $baseUrl ?>">
                         <span class="menu-title"><?php echo $row['name'] ?></span>
                         <i class="<?php echo $row['icon'] ?>"></i>
@@ -51,7 +51,7 @@ foreach($resMenu AS $row) {
                 </li>
                 <?php else : ?>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo $active ?>" data-bs-toggle="collapse" href="#<?php echo $row['active_keyword'] ?>" aria-expanded="false" aria-controls="<?php echo $row['active_keyword'] ?>">
+                    <a class="nav-link <?php echo $active ?>" data-status = "<?php echo $checkmenu ?>" data-active-keyword="<?php echo $row['active_keyword'] . '|' . $uri ?>" data-bs-toggle="collapse" href="#<?php echo $row['active_keyword'] ?>" aria-expanded="false" aria-controls="<?php echo $row['active_keyword'] ?>">
                         <span class="menu-title"><?php echo $row['name'] ?></span>
                         <i class="menu-arrow"></i>
                         <i class="<?php echo $row['icon'] ?>"></i>
@@ -59,11 +59,11 @@ foreach($resMenu AS $row) {
                     <div class="collapse" id="<?php echo $row['active_keyword'] ?>">
                         <ul class="nav flex-column sub-menu">
                             <?php foreach($row['sub_menu'] AS $rows): 
-                                $checkmenu = $helpers->checkactivemenu($uri, $rows['active_keyword']); 
-                                $active = ($checkmenu) ? 'active' : '';
+                                $checkmenu2 = $helpers->checkactivemenu($uri, $rows['active_keyword']); 
+                                $active2 = ($checkmenu2) ? 'active' : '';
                             ?>
-                            <li class="nav-item">
-                                <a class="<?php echo $rows['icon'] ?> <?php echo $active ?>" href="<?php echo BASE_URL . '/' . $rows['url'] ?>">
+                            <li class="nav-item" data-status = "<?php echo $checkmenu2 ?>">
+                                <a class="<?php echo $rows['icon'] ?> <?php echo $active2 ?>" href="<?php echo BASE_URL . '/' . $rows['url'] ?>">
                                     <?php echo $rows['name'] ?>
                                 </a>
                             </li>
@@ -72,7 +72,7 @@ foreach($resMenu AS $row) {
                     </div>
                 </li>
                 <?php endif; ?>
-                <?php endforeach; ?>
+                <?php $checkmenu = false; endforeach; ?>
             </ul>
         </nav>
         <!-- partial -->
