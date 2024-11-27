@@ -469,6 +469,36 @@ INSERT INTO `schools` VALUES (1,'Hinunangan East Central School',28510,'P','Y',1
 UNLOCK TABLES;
 
 --
+-- Table structure for table `sitrep_headers`
+--
+
+DROP TABLE IF EXISTS `sitrep_headers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `sitrep_headers` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) DEFAULT NULL,
+  `date` date DEFAULT NULL,
+  `status` char(1) NOT NULL DEFAULT 'Y' COMMENT 'Y = Yes,\\nN = No,\\nD = Deleted',
+  `created_by` int DEFAULT NULL,
+  `created_at` datetime DEFAULT NULL,
+  `updated_by` int DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `sitrep_headers`
+--
+
+LOCK TABLES `sitrep_headers` WRITE;
+/*!40000 ALTER TABLE `sitrep_headers` DISABLE KEYS */;
+INSERT INTO `sitrep_headers` VALUES (1,'LGU - HINUNANGAN Emergency Operations Center','2024-09-01','Y',1,'2024-11-27 15:55:05',1,'2024-11-27 07:55:05');
+/*!40000 ALTER TABLE `sitrep_headers` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sub_menu`
 --
 
@@ -574,4 +604,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-11-27 14:57:49
+-- Dump completed on 2024-11-27 15:59:41
