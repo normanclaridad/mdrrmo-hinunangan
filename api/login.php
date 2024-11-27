@@ -2,6 +2,7 @@
 session_start();
 
 require ('../models/Users.php');
+require ('../models/App_settings.php');
 
 if(!isset($_SERVER['HTTP_X_REQUESTED_WITH'])) {
     echo json_encode(['code' => 4, 'message' => 'You are not authorized to access this page']);
@@ -9,6 +10,7 @@ if(!isset($_SERVER['HTTP_X_REQUESTED_WITH'])) {
 }
 
 $users = new Users();
+$appSettings = new App_settings();
 
 $userName = isset($_POST['username']) ? $_POST['username'] : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
@@ -29,11 +31,19 @@ if(empty($resCheckUser))
     return;
 }
 
+$resAppSettings = $appSettings->getWhere();
+
 $_SESSION['SESS_AUTH'] = TRUE;
 $_SESSION['SESS_ID'] = $resCheckUser['id'];
 $_SESSION['SESS_FIRST_NAME'] = $resCheckUser['first_name'];
 $_SESSION['SESS_LAST_NAME'] = $resCheckUser['last_name'];
 $_SESSION['SESS_USER_ROLE_NAME'] = $resCheckUser['user_role_name'];
+
+if(!empty($resAppSettings)) {
+    foreach($resAppSettings as $app) {
+        $_SESSION['SESS_' . strtoupper($app['name'])] = $app['value'];
+    }
+}
  
 echo json_encode(['code' => 0, 'message' => 'Successful.']);
 return;

@@ -24,8 +24,13 @@ if(strlen($search) < 4) {
 // $whereCondition = "(b.brgyDesc LIKE '%". $search ."%' OR cm.cityMunDesc LIKE '%". $search ."%' OR p.provDesc LIKE '%". $search ."%')";
 // $whereCondition = "(b.brgyDesc LIKE '". $search ."%')";
 $whereCondition = "CONCAT(b.brgyDesc, ' ', cm.citymunDesc, ' ', p.provDesc) LIKE '$search%'";
+if(!empty($_SESSION['SESS_CITY_MUN'])) {
+    $whereCondition .= " AND b.citymunCode = 086403";
+}
+
 $resResults = $barangays->getJoinWhere($whereCondition);
 
+$data = [];
 foreach($resResults AS $row) {
     $data[] = [
         'id' => $row['id'],

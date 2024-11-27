@@ -59,14 +59,15 @@ class Helpers {
      * @return boolean
      */
 
-     public function checkactivemenu($uri, $activekeyword) : bool {
+     public function checkactivemenu($uri, $activekeyword) {
 
         $spl = str_replace('/views/','',$uri);
-        if(strpos($spl, $activekeyword) === true) {
-            return true;
+        //var_dump($activekeyword . '|' . $spl);
+        if(stripos($spl, $activekeyword) !== false) {
+            return 1;
         }
 
-        return false;
+        return 0;
     }
 
     public function checkDevice() {
