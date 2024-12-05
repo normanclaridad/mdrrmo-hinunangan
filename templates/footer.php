@@ -37,6 +37,8 @@
     <script src="<?php echo BASE_URL ?>/assets/vendors/datatables/jquery.dataTables.min.js"></script>
     <script src="<?php echo BASE_URL ?>/assets/vendors/datatables/dataTables.bootstrap4.min.js"></script>
 
+    <script src="<?php echo BASE_URL ?>/assets/vendors/summernote-0.9.0-dist/summernote-bs5.js"></script>
+    <script src="<?php echo BASE_URL ?>/assets/vendors/summernote-0.9.0-dist/lang/summernote-en-US.js"></script>
     
     <script src="<?php echo BASE_URL ?>/assets/js/parsley.js"></script>
     <script src="<?php echo BASE_URL ?>/assets/js/select2.full.js"></script>

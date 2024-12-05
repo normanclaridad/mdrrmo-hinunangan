@@ -60,7 +60,7 @@ $data = [];
 foreach($resResults AS $row) {
     $encryptedId = $helpers->encryptDecrypt($row['id']);
     
-    $url = $protocol . $_SERVER['HTTP_HOST'] . '/views/sitrep/view.php?id=' . $encryptedId;
+    $url = $protocol . $_SERVER['HTTP_HOST'] . '/views/situational-reports/sitrep/view.php?id=' . $encryptedId;
     $action = '<a class="btn btn-sm btn-edit" data-id="'. $row['id'] .'" data-name="'. $row['name'] .'" data-status="' . $row['status'] . '" data-date="' . $row['date'] . '"><i class="fa fa-edit"></i></a>';
     $action .= '&nbsp; <a class="btn btn-sm btn-view" href="'. $url .'" data-id="'. $row['id'] .'" data-name="'. $row['name'] . '" data-status="' . $row['status'] . '"><i class="fa fa-eye"></i></a>';
     $action .= '&nbsp; <a class="btn btn-sm btn-delete" data-id="'. $row['id'] .'" data-name="'. $row['name'] . '" data-status="' . $row['status'] . '"><i class="fa fa-trash"></i></a>';

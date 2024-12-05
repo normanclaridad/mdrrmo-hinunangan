@@ -267,6 +267,35 @@ include_once '../../../templates/sidebar.php';
             $('#modal-add').modal('show');
         })
 
+        
+        $('#btn-save').click(function()
+        {
+            if(!$('form#frm-user').parsley().validate()) {
+                return;
+            }
+            
+            var msg = $('.error-message');
+
+            if(confirm('Are all data is correct?')){ 
+                $.ajax({
+                    url : '<?php echo BASE_URL ?>/api/users/dml.php',
+                    type : 'post',
+                    data : $('#frm-user').serialize(),
+                    success : function(data) {
+                        var json = $.parseJSON(data);
+                        alert(json['message']);
+                        if(json['code'] == 0) {
+                            $('#modal-add').modal('hide');
+                            table.ajax.reload();
+                            // location.reload();
+                        }
+                    }
+                })
+            }
+            return false;
+        })
+
+
         $('#btn-save-access').click(function(){
 
             var data = [];

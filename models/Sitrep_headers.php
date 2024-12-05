@@ -10,7 +10,7 @@ class Sitrep_headers extends Models {
         $this->table = 'sitrep_headers';
 	}
 
-	public function getWhere( $where = '', $sortBy = 'name ASC') {
+	public function getWhere( $where = '', $sortBy = 'name ASC', $assoc = '') {
 		$sql = "SELECT * FROM $this->table WHERE 1 ";
 		
 		if(!empty($where)) {
@@ -19,7 +19,11 @@ class Sitrep_headers extends Models {
 
 		$sql .= " ORDER BY $sortBy ";
 
-        $rows = $this->db->select($sql);
+        if(empty($assoc)) {
+            $rows = $this->db->select($sql);
+        } else {
+            $rows = $this->db->select($sql, 'assoc');
+        }
         return $rows;
 	}
 

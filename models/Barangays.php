@@ -10,7 +10,7 @@ class Barangays extends Models {
         $this->table = 'barangays';
 	}
 
-	public function getWhere( $where = '', $sortBy = 'name ASC') {
+	public function getWhere( $where = '', $sortBy = 'brgyDesc ASC') {
 		$sql = "SELECT * FROM $this->table WHERE 1 ";
 		
 		if(!empty($where)) {

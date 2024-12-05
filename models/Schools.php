@@ -87,4 +87,21 @@ class Schools extends Models {
 		$rows = $this->db->select($sql, 'assoc');
         return $rows['total_count'];
 	}
+
+    public function getSchools( $where = '', $sortBy = 's.name ASC') {
+		$sql = "SELECT s.*, b.brgyDesc 
+                FROM $this->table s
+                JOIN barangays b ON b.id = barangay_id 
+                WHERE 1 ";
+		
+		if(!empty($where)) {
+			$sql .= " $where";
+		}
+
+		$sql .= " ORDER BY $sortBy ";
+
+        $rows = $this->db->select($sql);
+        return $rows;
+	}
+
 }
