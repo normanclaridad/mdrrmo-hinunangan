@@ -3,6 +3,9 @@ include('../../inc/app_settings.php');
 require_once('../../inc/helpers.php');
 require ('../../models/Mechanism_of_injuries.php');
 require ('../../models/Intervention_management.php');
+require ('../../models/Nature_illness_medical.php');
+require ('../../models/Nature_illness_trauma.php');
+
 
 $helpers = new Helpers();
 define('PAGE_TITLE', 'Patient Care Reports');
@@ -14,10 +17,14 @@ if(!$helpers->checkSession()) {
 
 $moi = new Mechanism_of_injuries();
 $interventionMgmnt = new Intervention_management();
+$natureIllnessMedical = new Nature_illness_medical();
+$natureIllnessTrauma = new Nature_illness_trauma();
 
 $resMoi = $moi->getWhere("AND status = 'Y'");
 
 $resInterventionMgmnt = $interventionMgmnt->getWhere("AND status = 'Y'");
+$resNatureIllnessMedical = $natureIllnessMedical->getWhere("AND status = 'Y'");
+$resNatureIllnessTrauma = $natureIllnessTrauma->getWhere("AND status = 'Y'");
 
 include_once '../../templates/header.php';
 include_once '../../templates/sidebar.php';
@@ -314,12 +321,12 @@ include_once '../../templates/sidebar.php';
                                             <input type="radio" name="aid_prior_arrival" value="O"> Yes, Other 
                                         </label><br><br>
                                     </td>
-                                    <td rowspan="1">
+                                    <td rowspan="1" style="text-align: center">
                                         <label>
                                             <input type="radio" name="nature_illness" value="M"> MEDICAL
                                         </label>
                                     </td>
-                                    <td rowspan="1">
+                                    <td rowspan="1" style="text-align: center">
                                         <label>
                                             <input type="checkbox" name="nature_illness" value="T"> TRAUMA
                                         </label>
@@ -358,21 +365,20 @@ include_once '../../templates/sidebar.php';
                                     <br>
                                 </td>                                
                                 <td rowspan="1"><br>
-                                    <?php ?>
-                                    <input type="checkbox" name="none"> Repiratory<br>
-                                    <input type="checkbox" name="none"> Cardiac<br>
-                                    <input type="checkbox" name="none"> Medical<br>
-                                    <input type="checkbox" name="none"> OB / Gyne<br><br>
+                                    <?php foreach($resNatureIllnessMedical as $natM): ?>
+                                        <label>
+                                            <input type="checkbox" name="natureIllnessMedical[]" value="<?php echo $natM ?>"> 
+                                            <?php echo $natM['name'] ?>
+                                        </label><br>
+                                    <?php endforeach; ?>
                                 </td>
                                 <td rowspan="1"><br>
-                                    <input type="checkbox" name="none"> Deformity <br>
-                                    <input type="checkbox" name="none"> Contusion <br>
-                                    <input type="checkbox" name="none"> Abrasion <br>
-                                    <input type="checkbox" name="none"> Puncture <br>
-                                    <input type="checkbox" name="none"> Burns  <br>
-                                    <input type="checkbox" name="none"> Tenderness <br> 
-                                    <input type="checkbox" name="none"> Laceration <br>
-                                    <input type="checkbox" name="none"> Swelling <br><br>
+                                    <?php foreach($resNatureIllnessTrauma as $natT): ?>
+                                        <label>
+                                            <input type="checkbox" name="natureIllnessTrauma[]" value="<?php echo $natL ?>">
+                                            <?php echo $natT['name'] ?>
+                                        </label><br>
+                                    <?php endforeach; ?>
                                 </td>
                             </tr>
                         </table>
