@@ -26287,3 +26287,18 @@ dl li {
   flex-grow: 1;
 }
 /*# sourceMappingURL=maps/style.css.map */
+
+
+/* title css navbar */
+.navbar-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #4B0082; /* Adjust color as needed */
+  margin: 0;
+}
+
+.navbar-subtitle {
+  font-size: 14px;
+  color: #888888; /* Adjust color as needed */
+  margin: 0;
+}

@@ -187,7 +187,7 @@ include_once '../../../templates/sidebar.php';
             },
             "columnDefs": [ {
                 "targets": [6],
-                "orderable": false
+                "orderable": falase
             } ],
             "order": []
         });
