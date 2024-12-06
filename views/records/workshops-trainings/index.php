@@ -3,7 +3,9 @@ include('../../../inc/app_settings.php');
 require_once('../../../inc/helpers.php');
 require ('../../../models/User_roles.php');
 require ('../../../models/Sources.php');
-require ('../../../models/Issuance_types.php');
+require ('../../../models/Employees.php');
+require ('../../../models/Workshop_training_types.php');
+require ('../../../models/Barangays.php');
 
 $helpers = new Helpers();
 define('PAGE_TITLE', 'Workshops and Training Sessions');
@@ -14,13 +16,17 @@ if(!$helpers->checkSession()) {
 }
 
 $userRoles = new User_roles();
-$issuanceTypes = new Issuance_types();
+$employees = new Employees();
 $sources = new Sources();
+$workshopTrainingTypes = new Workshop_training_types();
+$barangays = new Barangays();
 
 $resUserRoles = $userRoles->getWhere("AND status = 'Y'");
 
-$resIssuanceTypes = $issuanceTypes->getWhere(" AND status = 'Y'");
+$resEmployees = $employees->getWhere(" AND status = 'Y'");
 $resSources = $sources->getWhere(" AND status = 'Y'");
+$resWorkshopTrainingTypes = $workshopTrainingTypes->getWhere(" AND status = 'Y'");
+$resBarangays = $barangays->getWhere("AND cityMunCode=" . $_SESSION['SESS_CITY_MUN']);
 
 include_once '../../../templates/header.php';
 include_once '../../../templates/sidebar.php';
@@ -64,6 +70,19 @@ include_once '../../../templates/sidebar.php';
     .password-area {
         display: none;
     }
+    
+    .select2-container--default .select2-selection--multiple .select2-selection__choice{
+        font-size: .80rem !important;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__display {
+        padding-left: 10px !important;
+    }
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+        top:auto;
+    }
+    .blgu-area {
+        display: none;
+    }
 </style>
     <div class="main-panel">
         <div class="content-wrapper">
@@ -93,10 +112,11 @@ include_once '../../../templates/sidebar.php';
                     <table class="table" id="tbl-data">
                         <thead>
                             <tr> 
+                                <th>Conducted<br>/Attended</th>
                                 <th>Title</th>
                                 <th>Source</th>
                                 <th>Date</th>
-                                <th>Type of Issuance</th>
+                                <th>Workshop training type</th>
                                 <th>File</th>
                                 <th>Status</th>
                                 <th>Date/Time</th>
@@ -133,10 +153,6 @@ include_once '../../../templates/sidebar.php';
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="title">Title</label>
-                                <input type="text" class="form-control" id="title" name="title" placeholder="Title" required>
-                            </div>
-                            <div class="form-group attended-area">
                                 <label for="source">Source</label>
                                 <select name="source" id="source" class="form-control" required>
                                     <option value="">Select</option>
@@ -146,18 +162,44 @@ include_once '../../../templates/sidebar.php';
                                         </option>
                                     <?php endforeach; ?>
                                 </select>
+                            </div>                            
+                            <div class="form-group blgu-area">
+                                <label for="barangay">Barangay</label>
+                                <select name="barangay" id="barangay" class="form-control" style="width: 100%;">
+                                    <option value="">Select</option>
+                                    <?php foreach($resBarangays as $br) : ?>
+                                        <option value="<?php echo $br['id'] ?>">
+                                            <?php echo $br['brgyDesc'] ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="employees">Employees</label>
+                                <select name="employees" id="employees" class="form-control" multiple required style="width: 100%;">
+                                    <option value="">Select</option>
+                                    <?php foreach($resEmployees as $emp) : ?>
+                                        <option value="<?php echo $emp['id'] ?>">
+                                            <?php echo $emp['first_name'] . ' ' . $emp['last_name'] ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type="text" class="form-control" id="title" name="title" placeholder="Title" required>
                             </div>
                             <div class="form-group">
                                 <label for="date">Date</label>
                                 <input type="date" class="form-control" id="date" name="date" required>
                             </div>
                             <div class="form-group">
-                                <label for="issuanceType">Type Of Issuance</label>
-                                <select name="issuanceType" id="issuanceType" class="form-control" required>
+                                <label for="workshop_training_type">Type Of Workshops and Trainings</label>
+                                <select name="workshop_training_type" id="workshop_training_type" class="form-control" required>
                                     <option value="">Select</option>
-                                    <?php foreach($resIssuanceTypes as $issu) : ?>
-                                        <option value="<?php echo $issu['id'] ?>">
-                                            <?php echo $issu['name'] ?>
+                                    <?php foreach($resWorkshopTrainingTypes as $wt) : ?>
+                                        <option value="<?php echo $wt['id'] ?>">
+                                            <?php echo $wt['name'] ?>
                                         </option>
                                     <?php endforeach; ?>
                                 </select>
@@ -189,7 +231,7 @@ include_once '../../../templates/sidebar.php';
             processing: true,
             serverSide: true,
             ajax: {
-                url: '<?php echo BASE_URL ?>/api/official-issuances/get.php',
+                url: '<?php echo BASE_URL ?>/api/workshops-trainings/get.php',
                 type: 'POST',
                 data:   function ( d ) {
                     return $.extend( {}, d, {
@@ -210,7 +252,7 @@ include_once '../../../templates/sidebar.php';
                 }
             },
             "columnDefs": [ {
-                "targets": [7],
+                "targets": [8],
                 "orderable": false
             } ],
             "order": []
@@ -234,17 +276,20 @@ include_once '../../../templates/sidebar.php';
 
             var formData = new FormData();
             formData.append('file', $('#scanned_file')[0].files[0]);
-            formData.append('title', $('#title').val());
+            formData.append('conducted_attend', $('#conducted_attend').val());
             formData.append('source', $('#source').val());
+            formData.append('barangay', $('#barangay').val());
+            formData.append('employees', $('#employees').val());
+            formData.append('title', $('#title').val());
             formData.append('date', $('#date').val());
-            formData.append('issuanceType', $('#issuanceType').val());
-            formData.append('status', $('#issuanceType').val());
+            formData.append('workshop_training_type', $('#workshop_training_type').val());            
+            formData.append('status', $('#status').val());
             formData.append('id', $('#id').val());
             formData.append('action_type', $('#action_type').val());
 
             var msg = $('.error-message');
             $.ajax({
-                url : '<?php echo BASE_URL ?>/api/official-issuances/dml.php',
+                url : '<?php echo BASE_URL ?>/api/workshops-trainings/dml.php',
                 type : 'post',
                 data : formData,
                 processData: false,  // tell jQuery not to process the data
@@ -264,6 +309,23 @@ include_once '../../../templates/sidebar.php';
             })
             return false;
         })
+
+        $('#employees').select2({
+            dropdownParent: $('#modal-add'),
+            allowClear: true
+        })
+
+        $('#source').change(function(){
+            $('.blgu-area').hide();
+            $('#barangay').val('');
+            $('#barangay').removeAttr('required');
+            if($(this).val() == 2) {
+                $('.blgu-area').show();
+                $('#barangay').attr('required', '');
+            }
+        })
+        
+        $('#source').trigger('change');
     });
 
     //Bind to edit
@@ -275,10 +337,20 @@ include_once '../../../templates/sidebar.php';
         $('.modal-title').html('Edit <?php echo PAGE_TITLE ?>');
         $('#action_type').val('update');
         $('#id').val($(this).data('id'));
-        $('#title').val($(this).data('title'));
+        $('#conducted_attend').val($(this).data('conducted-attended'));
         $('#source').val($(this).data('source-id'));
+        $('#barangay').val($(this).data('barangay-id'));
+        var emp = $(this).data('employees').split(',');
+        var selectedItems = [];
+        for(e of emp){
+            // console.log(e);
+            selectedItems.push(e);
+        }
+        // console.log(selectedItems);
+        $('#employees').val(selectedItems).trigger('change');
+        $('#title').val($(this).data('title'));
         $('#date').val($(this).data('date'));
-        $('#issuanceType').val($(this).data('issuance-type-id'));
+        $('#workshop_training_type').val($(this).data('workshop-training-type-id'));
 
         $('#scanned_file').removeAttr('required');
         $('#status').removeAttr('checked');
@@ -300,7 +372,7 @@ include_once '../../../templates/sidebar.php';
         if(confirm('Are you sure you want this record: ' + title + '?'))
         {
             $.ajax({
-                url : '<?php echo BASE_URL ?>/api/official-issuances/dml.php',
+                url : '<?php echo BASE_URL ?>/api/workshops-trainings/dml.php',
                 type : 'post',
                 data : { action_type : 'delete', 'id' : id },
                 success : function(data) {
