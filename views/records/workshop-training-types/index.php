@@ -1,10 +1,10 @@
 <?php
-include('../../inc/app_settings.php');
-require_once('../../inc/helpers.php');
-require ('../../models/User_roles.php');
+include('../../../inc/app_settings.php');
+require_once('../../../inc/helpers.php');
+require ('../../../models/User_roles.php');
 
 $helpers = new Helpers();
-define('PAGE_TITLE', 'Patient Care Reports');
+define('PAGE_TITLE', 'Type Of Workshop and Trainings');
 
 if(!$helpers->checkSession()) {
     $helpers->redirectLogin();
@@ -15,8 +15,8 @@ $userRoles = new User_roles();
 
 $resUserRoles = $userRoles->getWhere("AND status = 'Y'");
 
-include_once '../../templates/header.php';
-include_once '../../templates/sidebar.php';
+include_once '../../../templates/header.php';
+include_once '../../../templates/sidebar.php';
 ?>
 <style>
     .btn.btn-icon {
@@ -57,13 +57,6 @@ include_once '../../templates/sidebar.php';
     .password-area {
         display: none;
     }
-
-    .select2-container--default .select2-selection--single .select2-search__field, .select2-container--default .select2-selection--single {
-        padding: 16px;
-    }
-    .select2-container--default .select2-selection--single .select2-selection__arrow {
-        top: -6px;
-    }
 </style>
     <div class="main-panel">
         <div class="content-wrapper">
@@ -85,16 +78,15 @@ include_once '../../templates/sidebar.php';
                     <h4 class="card-title">
                         <?php echo PAGE_TITLE ?>
                         <span class="float-end">
-                            <a href="<?php echo BASE_URL ?>/views/patient-healthcare/add.php" class="btn btn-outline-secondary btn-rounded btn-icon btn-sm" id="btn-add">
+                            <button class="btn btn-outline-secondary btn-rounded btn-icon btn-sm" id="btn-add">
                                 <i class="mdi mdi-plus-outline text-info"></i>
-                            </a>
+                            </button>
                         </span>
                     </h4>
-                    <table class="table table-responsive" id="tbl-data">
+                    <table class="table" id="tbl-data">
                         <thead>
                             <tr> 
                                 <th>Name</th>
-                                <th>Date</th>
                                 <th>Status</th>
                                 <th>Date/Time</th>
                                 <th>Action</th>
@@ -121,7 +113,14 @@ include_once '../../templates/sidebar.php';
                         <form id="frm-crud" method="post" data-parsley-validate="">
                             <input type="hidden" name="action_type" id="action_type">
                             <input type="hidden" name="id" id="id">
-                            
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+                            </div>
+                            <div class="form-check form-check-flat form-check-primary">
+                                <label class="form-check-label">
+                                <input type="checkbox" class="form-check-input" id="status" name="status"> Status </label>
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -133,7 +132,7 @@ include_once '../../templates/sidebar.php';
         </div>
                              
 <?php
-    include_once '../../templates/footer.php';
+    include_once '../../../templates/footer.php';
 ?>
 <script>
     $(document).ready(function(){
@@ -141,7 +140,7 @@ include_once '../../templates/sidebar.php';
             processing: true,
             serverSide: true,
             ajax: {
-                url: '<?php echo BASE_URL ?>/api/sitrep/get.php',
+                url: '<?php echo BASE_URL ?>/api/workshop-training-types/get.php',
                 type: 'POST',
                 data:   function ( d ) {
                     return $.extend( {}, d, {
@@ -162,7 +161,7 @@ include_once '../../templates/sidebar.php';
                 }
             },
             "columnDefs": [ {
-                "targets": [4],
+                "targets": [3],
                 "orderable": false
             } ],
             "order": []
@@ -171,13 +170,10 @@ include_once '../../templates/sidebar.php';
         $('#btn-add').click(function(){
 
             // Reset the form to remove the validation error
-            // $('#frm-crud').parsley().reset();
-            // $('#frm-crud')[0].reset();
-            // $('#action_type').val('add');
-            // //Destroy and reinitialize
-            // // $("#barangay").select2("destroy").select2();
-            // $('#barangay').val(null).trigger('change');
-            // $('#modal-add').modal('show');
+            $('#frm-crud').parsley().reset();
+            $('#frm-crud')[0].reset();
+            $('#action_type').val('add');
+            $('#modal-add').modal('show');
         })
 
         $('#btn-save').click(function(){
@@ -188,7 +184,7 @@ include_once '../../templates/sidebar.php';
 
             var msg = $('.error-message');
             $.ajax({
-                url : '<?php echo BASE_URL ?>/api/sitrep/dml.php',
+                url : '<?php echo BASE_URL ?>/api/workshop-training-types/dml.php',
                 type : 'post',
                 data : $('#frm-crud').serialize(),
                 success : function(data) {
@@ -218,18 +214,6 @@ include_once '../../templates/sidebar.php';
         $('#action_type').val('update');
         $('#id').val($(this).data('id'));
         $('#name').val($(this).data('name'));
-        $('#school_type').val($(this).data('type'));
-        // $('#barangay').val($(this).data('barangay-id'));
-        // $('#barangay').val($(this).data('address'));
-
-        var data = {
-            id: $(this).data('barangay-id'),
-            text: $(this).data('address')
-        };
-
-        var newOption = new Option(data.text, data.id, false, false);
-        $('#barangay').append(newOption).trigger('change');
-
         $('#status').removeAttr('checked');
         // $('#status_no').attr('checked', false);
         if($(this).data('status') == 'Y'){
@@ -249,7 +233,7 @@ include_once '../../templates/sidebar.php';
         if(confirm('Are you sure you want delete name: ' + name + '?'))
         {
             $.ajax({
-                url : '<?php echo BASE_URL ?>/api/sitrep/dml.php',
+                url : '<?php echo BASE_URL ?>/api/workshop-training-types/dml.php',
                 type : 'post',
                 data : { action_type : 'delete', 'id' : id },
                 success : function(data) {
@@ -264,5 +248,5 @@ include_once '../../templates/sidebar.php';
             })
         }
     })
-    
+
 </script>
