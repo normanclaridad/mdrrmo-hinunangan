@@ -1,6 +1,21 @@
+<?php
+include('../../../inc/app_settings.php');
+require_once('../../../inc/helpers.php');
 
-        <!-- partial --><style>
-    .btn.btn-icon {
+$helpers = new Helpers();
+define('PAGE_TITLE', 'Menu');
+
+if(!$helpers->checkSession()) {
+    $helpers->redirectLogin();
+    return;
+}
+
+
+include_once '../../../templates/header.php';
+include_once '../../../templates/sidebar.php';
+?>
+<style>
+     .btn.btn-icon {
         width: 30px;
         height: 30px;
     }
@@ -39,56 +54,184 @@
         display: none;
     }
 
-</style>
-<div class="main-panel">
-  <div class="content-wrapper">
-      <div class="page-header">
-          <h3 class="page-title"> Others </h3>
-          <nav aria-label="breadcrumb">
-              <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="#">Home</a></li>
-                  <li class="breadcrumb-item active" aria-current="page">Terms</li>
-              </ol>
-          </nav>
-      </div>
-      <div class="card">
-          <div class="card-body">
-              <h4 class="card-title">
-                  Terms
-                  <span class="float-end">
-                      <button class="btn btn-outline-secondary btn-rounded btn-icon btn-sm" id="btn-add" onclick="openAddModal()">
-                          <i class="mdi mdi-plus-outline text-info"></i>
-                      </button>
-                  </span>
-              </h4>
-              <table class="table" id="tbl-data">
-                  <thead>
-                      <tr> 
-                          <th>Subject</th>
-                          <th>Created</th>
-                          <th>Action</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <!-- Dynamically added rows will go here -->
-                  </tbody>
-              </table>
-          </div>
-      </div>
-  </div>
+    .select2-container--default .select2-selection--single .select2-search__field, .select2-container--default .select2-selection--single {
+        padding: 16px;
+    }
+    .select2-container--default .select2-selection--single .select2-selection__arrow {
+        top: -6px;
+    }
+    .table {
+    width: 100%;
+    border-collapse: collapse;
+}
 
-  <!-- Modal Code -->
-  <!-- MODAL 1 -->
-  <div class="modal fade" id="modal-add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-          <div class="modal-content" style="padding: 15px;">
-              <div class="modal-header">
-                  <h5 class="modal-title" id="add-user-title">Add Terms</h5>
-                  <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                      <span aria-hidden="true">×</span>
-                  </button>
-              </div>
-              <fieldset style="padding: 5px;">
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
+
+.table td {
+    text-align: center;
+}
+
+.btn {
+    padding: 5px 10px;
+    background-color: #9e9e9e;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #6d6d6d;
+}
+
+.btn.btn-sm, .ajax-upload-dragdrop .btn-sm.ajax-file-upload, .btn-group-sm > .btn, .ajax-upload-dragdrop .btn-group-sm > .ajax-file-upload {
+    font-size: 0.875rem;
+}
+.btn i, .ajax-upload-dragdrop .ajax-file-upload i {
+    font-size: 1rem;
+}
+.fa-edit:before, .fa-pencil-square-o:before {
+    content: "\f044";
+}
+.fa-trash:before {
+    content: "\f1f8";
+}
+/* Style for the Term Section */
+/* Modal Header */
+.modal-header {
+    background-color: #f8f9fa; /* Light background for better contrast */
+    border-bottom: 1px solid #dee2e6; /* Subtle border at the bottom */
+}
+
+/* Modal Title */
+.modal-title {
+    font-weight: 500; /* Medium weight for better readability */
+    font-size: 1.25rem; /* Adjusted font size */
+}
+
+/* Modal Body */
+.modal-body {
+    padding: 20px; /* Increased padding for comfort */
+}
+
+/* Fieldset Styles */
+fieldset {
+    border: 1px solid #dee2e6; /* Light gray border */
+    border-radius: 5px; /* Rounded corners */
+    padding: 15px; /* Padding inside fieldsets */
+    margin-bottom: 20px; /* Space between fieldsets */
+}
+
+/* Legend Styles */
+legend {
+    font-size: 1.1rem; /* Slightly larger font for legend */
+    font-weight: bold; /* Bold text for emphasis */
+    color: #333; /* Darker color for better contrast */
+}
+
+/* Input Styles */
+.form-control {
+    border-radius: 5px; /* Rounded corners for inputs */
+    border: 1px solid #ced4da; /* Light gray border */
+}
+
+/* Input Focus */
+.form-control:focus {
+    border-color: #80bdff; /* Lighter blue border on focus */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Shadow on focus */
+}
+
+/* Button Styles */
+.btn-primary {
+    border-radius: 5px; /* Rounded corners for buttons */
+    transition: background-color 0.3s; /* Smooth transition effect */
+}
+
+/* Button Hover Effect */
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Footer Styles */
+.modal-footer {
+    background-color: #f1f1f1; /* Slightly darker background for footer */
+    border-top: 1px solid #dee2e6; /* Gray border on top */
+}
+
+/* Small Text Styles */
+.form-text {
+    font-size: 0.85rem; /* Smaller text for hints */
+    color: #6c757d; /* Subtle gray color for less emphasis */
+}
+
+</style>
+    <div class="main-panel">
+        <div class="content-wrapper">
+            <div class="page-header">
+                <h3 class="page-title"> <?php echo PAGE_TITLE ?> </h3>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item">
+                            <a href="#">Home</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            <?php echo PAGE_TITLE ?>
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <?php echo PAGE_TITLE ?>
+                        <span class="float-end">
+                            <button class="btn btn-outline-secondary btn-rounded btn-icon btn-sm" id="btn-add">
+                                <i class="mdi mdi-plus-outline text-info"></i>
+                            </button>
+                        </span>
+                    </h4>
+                    <table class="table" id="tbl-data">
+                        <thead>
+                            <tr> 
+                                <th>Subject</th>
+                                <th>Created </th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    
+        
+
+        <!-- MODAL 1 -->
+        <div class="modal fade" id="modal-add" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="add-user-title">Add Terms</h5>
+                        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                    <form id="frm-crud" action="submit_report.php" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="action_type" id="action_type">
+                    <iput type="hidden" name="id" id="id">
+
+                    <fieldset style="padding: 5px;">
                 <legend>Training/Seminar Form</legend>
                 
                 <div class="form-group mb-2">
@@ -164,53 +307,22 @@
                     <button type="button" id="btn-save" class="btn btn-primary">Save Report</button>
                 </div>
             </fieldset>
-            
-          </div>
-      </div>
-  </div>
-
-
-
-
-                                    
-<!-- partial:partials/_footer.html -->
-            <footer class="footer">
-                <div class="d-sm-flex justify-content-center justify-content-sm-between">
-                    <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © 2024 MDRRMO-Hinunangan. All rights reserved.</span>
+                </form>
+            </div>
                 </div>
-            </footer>
-          <!-- partial -->
+            </div>
         </div>
-        <!-- main-panel ends -->
-      </div>
-      <!-- page-body-wrapper ends -->
-    </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
-    <script src="http://mdrrmo-hinunangan.test/assets/vendors/js/vendor.bundle.base.js"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <script src="http://mdrrmo-hinunangan.test/assets/vendors/chart.js/chart.umd.js"></script>
-    <script src="http://mdrrmo-hinunangan.test/assets/vendors/bootstrap-datepicker/bootstrap-datepicker.min.js"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="http://mdrrmo-hinunangan.test/assets/js/off-canvas.js"></script>
-    <script src="http://mdrrmo-hinunangan.test/assets/js/misc.js"></script>
-    <script src="http://mdrrmo-hinunangan.test/assets/js/settings.js"></script>
-    <script src="http://mdrrmo-hinunangan.test/assets/js/todolist.js"></script>
-    <script src="http://mdrrmo-hinunangan.test/assets/js/jquery.cookie.js"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page -->
-        <!-- End custom js for this page -->
-    
-    <script src="http://mdrrmo-hinunangan.test/assets/vendors/datatables/jquery.dataTables.min.js"></script>
-    <script src="http://mdrrmo-hinunangan.test/assets/vendors/datatables/dataTables.bootstrap4.min.js"></script>
+                             
+<?php
+    include_once '../../../templates/footer.php';
+?>
 
-    
-    <script src="http://mdrrmo-hinunangan.test/assets/js/parsley.js"></script>
+<script src="http://mdrrmo-hinunangan.test/assets/vendors/datatables/jquery.dataTables.min.js"></script>
+    <script src="http://mdrrmo-hinunangan.test/assets/vendors/datatables/dataTables.bootstrap4.min.js"></script>
+<script src="http://mdrrmo-hinunangan.test/assets/js/parsley.js"></script>
     <script src="http://mdrrmo-hinunangan.test/assets/js/select2.full.js"></script>
     
-    <script>
+<script>
       // Open the modal to add a new entry
       function openAddModal() {
           document.getElementById("add-user-title").innerText = "Add Terms";
